@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ConfigProvider } from './hooks/useConfig';
+import { InstanceProvider } from './hooks/useInstance';
 
 import WelcomeActivity from './feature/WelcomeActivity/WelcomeActivity';
 
 export function App() {
   return (
     <ConfigProvider>
+      <InstanceProvider>
       <Router>
         <Switch>
           <Route index>
@@ -13,6 +15,7 @@ export function App() {
           </Route>
         </Switch>
       </Router>
+      </InstanceProvider>
     </ConfigProvider>
   );
 }

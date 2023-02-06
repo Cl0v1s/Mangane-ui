@@ -4,6 +4,7 @@ import alias from '@rollup/plugin-alias';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  envDir: './',
   plugins: [
     preact(),
     alias({

@@ -1,8 +1,8 @@
+import { IndexView } from "./IndexView";
+
 function WelcomeActivity() {
   return (
-    <>
-      bonjour
-    </>
+    <IndexView />
   );
 }
 
