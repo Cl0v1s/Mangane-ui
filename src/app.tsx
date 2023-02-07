@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ConfigProvider } from './hooks/useConfig';
 import { InstanceProvider } from './hooks/useInstance';
 
-import WelcomeActivity from './feature/WelcomeActivity/WelcomeActivity';
+import WelcomeActivity from './features/WelcomeActivity/WelcomeActivity';
+
+
 
 export function App() {
   return (
