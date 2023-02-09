@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {IntlProvider} from 'react-intl'
 import { ConfigProvider } from './hooks/useConfig';
 import { InstanceProvider } from './hooks/useInstance';
+import { DirectoryProvider } from './hooks/useDirectory';
 
 
 import WelcomeActivity from './features/WelcomeActivity/WelcomeActivity';
@@ -15,15 +16,17 @@ export function App() {
           {/* 
     // @ts-ignore */}
       <ConfigProvider>
-        <InstanceProvider>
-        <Router>
-          <Switch>
-            <Route index>
-              <WelcomeActivity />
-            </Route>
-          </Switch>
-        </Router>
-        </InstanceProvider>
+        <DirectoryProvider>
+          <InstanceProvider>
+            <Router>
+              <Switch>
+                <Route index>
+                  <WelcomeActivity />
+                </Route>
+              </Switch>
+            </Router>
+          </InstanceProvider>
+        </DirectoryProvider>
       </ConfigProvider>
     </IntlProvider>
   );

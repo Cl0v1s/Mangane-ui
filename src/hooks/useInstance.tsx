@@ -25,7 +25,7 @@ const defaultState: IContext = {
     dispatch: undefined
 };
 
-const context = createContext(defaultState);
+const instanceContext = createContext(defaultState);
 
 function reducer(state: IInstance | null, action: IAction) {
     const {
@@ -49,7 +49,7 @@ export const useInstance = () => {
     const {
         state,
         dispatch
-    } = useContext(context);
+    } = useContext(instanceContext);
     return {
         state,
         dispatch,
@@ -65,7 +65,6 @@ export function InstanceProvider({
 
     const retrieveServerInfo = useCallback(async () => {
         const instance = await serverInfo();
-        console.log(instance);
         dispatch({ type: ACTIONS.RETRIEVED_INSTANCE, value: instance })
     }, []);
 
@@ -79,8 +78,8 @@ export function InstanceProvider({
     }), [state, dispatch]);
 
     return (
-        <context.Provider value={value}>
+        <instanceContext.Provider value={value}>
             { children }
-        </context.Provider>
+        </instanceContext.Provider>
     );
 }

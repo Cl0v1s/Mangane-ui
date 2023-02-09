@@ -1,4 +1,4 @@
-import { IAccount  } from "./IAccount"
+import { IPartialAccount  } from "./IAccount"
 
 interface IInstance {
     domain: string,
@@ -6,7 +6,7 @@ interface IInstance {
     description: string,
     stats: { user_count: number },
     email: string,
-    staff: Array<IAccount>
+    staff: Array<IPartialAccount>
 }
 
 export type { IInstance }

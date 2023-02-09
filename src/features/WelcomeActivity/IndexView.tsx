@@ -4,6 +4,7 @@ import { useConfig } from "../../hooks/useConfig";
 import { useInstance } from "../../hooks/useInstance";
 
 import { AccountSummary } from "../../common/AccountSummary";
+import { IPartialAccount } from "../../types/IAccount";
 
 function IndexView() {
     const { state: instance } = useInstance();
@@ -14,8 +15,6 @@ function IndexView() {
     }, []);
     
     const description = useMemo(() => config.instance.description.replace(/\{\{user_count\}\}/g, (instance?.stats.user_count || 0).toString()), [config.instance.description, instance?.stats.user_count])
-
-    console.log(instance);
 
     return (
         <div className={"flex flex-col gap-4"}>
@@ -34,11 +33,7 @@ function IndexView() {
                 <u><a href={`mailto:${instance?.email}`}>{ instance?.email }</a></u>
                 <div>
                     {
-                        instance?.contact_account && (
-                            <AccountSummary
-                                account={instance.contact_account}
-                            />
-                        )
+                        instance?.staff.map((pa: IPartialAccount) => <AccountSummary id={pa.id} />)
                     }
   
                 </div>

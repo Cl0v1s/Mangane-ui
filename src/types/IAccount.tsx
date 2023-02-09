@@ -1,5 +1,8 @@
-interface IAccount {
+interface IPartialAccount {
     id: string,
+}
+
+interface IAccount extends IPartialAccount {
     username: string,
     acct: string,
     display_name: string,
@@ -24,4 +27,8 @@ interface IAccount {
     }]
 }
 
-export type { IAccount };
+export function isPartial(account: IAccount | IPartialAccount) {
+    return !((account as any).username)
+}
+
+export type { IAccount, IPartialAccount };

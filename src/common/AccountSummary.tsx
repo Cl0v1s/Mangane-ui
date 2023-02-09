@@ -1,19 +1,26 @@
-import { IAccount } from "../types/IAccount"
+import { Loader } from './../ui/ui';
+import { IPartialAccount, IAccount, isPartial } from "../types/IAccount"
+import { useDirectory } from '../hooks/useDirectory';
+import { useMemo } from 'preact/hooks';
 
 interface IAccountSummary {
-    account: IAccount,
+    id: string,
 }
 
-const AccountSummary = ({ account }: IAccountSummary ) => {
+const AccountSummary = ({ id }: IAccountSummary ) => {
+    const directory = useDirectory();
+    const account = useMemo(() => directory(id), [directory]);
+
+    if(isPartial(account)) return <Loader />;
     return (
         <div className={"d-flex gap-2"}>
-            <img src={account.avatar_static} className={"rounded-circle w-[50px] h-[50px]"} />
+            <img src={(account as IAccount).avatar_static} className={"rounded-circle w-[50px] h-[50px]"} />
             <div>
                 <div className="font-bold">
-                    { account.display_name }
+                    { (account as IAccount).display_name }
                 </div>
                 <div className={"text-sm"}>
-                    { account.username }
+                    { (account as IAccount).username }
                 </div>
             </div>
         </div>
