@@ -5,7 +5,8 @@ interface IInstance {
     title: string,
     description: string,
     stats: { user_count: number },
-    contact_account: IAccount,
+    email: string,
+    staff: Array<IAccount>
 }
 
 export type { IInstance }
