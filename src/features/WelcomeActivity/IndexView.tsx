@@ -33,7 +33,7 @@ function IndexView() {
                 <u><a href={`mailto:${instance?.email}`}>{ instance?.email }</a></u>
                 <div>
                     {
-                        instance?.staff.map((pa: IPartialAccount) => <AccountSummary id={pa.id} />)
+                        instance?.staff.map((pa: IPartialAccount) => <AccountSummary account={pa} />)
                     }
   
                 </div>

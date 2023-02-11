@@ -1,10 +1,13 @@
 interface IPartialAccount {
-    id: string,
+    id?: string,
+    url?: string,
 }
 
 interface IAccount extends IPartialAccount {
+    id: string,
     username: string,
     acct: string,
+    fqn: string,
     display_name: string,
     locked: boolean,
     bot: boolean,

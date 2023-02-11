@@ -1,10 +1,13 @@
 import { createContext, ComponentChildren } from "preact";
 import { useMemo, useReducer, useContext, useEffect, useCallback } from "preact/hooks";
-import { IAccount, IPartialAccount } from "../types/IAccount";
+import { IAccount, IPartialAccount, isPartial } from "../types/IAccount";
 import { account } from "../services/accounts";
+import { webfinger } from "../services/instance";
+import { useInstance } from "./useInstance";
 
 export enum ACTIONS {
     REGISTER_USER,
+    ADD_REQUEST,
 }
 
 interface IAction {
@@ -15,7 +18,8 @@ interface IAction {
 interface IDirectory {
     users: {
         [id: string]: IAccount
-    }
+    },
+    requests: Array<string>,
 }
 
 interface IContext {
@@ -25,7 +29,7 @@ interface IContext {
 }
 
 const defaultState: IContext = {
-    state: { users: {}},
+    state: { users: {}, requests: []},
     dispatch: () => null,
 };
 
@@ -38,8 +42,21 @@ function reducer(state: IDirectory, action: IAction) {
     } = action;
     switch (type) {
         case ACTIONS.REGISTER_USER: {
-            console.log(value);
-            return state;
+            const user = value as IAccount;
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    [user.id]: user,
+                },
+                requests: state.requests.filter((r) => r !== user.url && r !== user.id)
+            }
+        }
+        case ACTIONS.ADD_REQUEST: {
+            return {
+                ...state,
+                requests: [...state.requests, value as string]
+            }
         }
         default: {
             return state;
@@ -47,23 +64,50 @@ function reducer(state: IDirectory, action: IAction) {
     }
 }
 
+/**
+ * Return a method allowing to get user data based on their ID. 
+ * It's also possible to search for a user by their handle  
+ * @returns 
+ */
 export const useDirectory = () => {
     const {
         state,
         dispatch
     } = useContext(directoryContext);
 
-    console.log(state);
+    const { state: instance} = useInstance();
 
-    const retrieve = useCallback(async (id: string) => {
+    useEffect(() => console.log(state), [state]);
+
+    const retrieveById = useCallback(async (id: string) => {
+        if(state.requests.find((r) => id === r)) return;
+        dispatch({ type: ACTIONS.ADD_REQUEST, value: id });
         const user = await account(id);
         dispatch({ type: ACTIONS.REGISTER_USER, value: user })
-    }, []);
+    }, [dispatch, state.requests]);
 
-    return useCallback((id: string): IPartialAccount | IAccount => {
-        if(state.users[id] != null) return state.users[id];
-        retrieve(id);
-        return { id };
+    const retrieveByUri = useCallback(async (uri: string) => {
+        if(state.requests.find((r) => uri === r)) return;
+        dispatch({ type: ACTIONS.ADD_REQUEST, value: uri });
+        const res = await webfinger(uri);
+        if(res == null) return null;
+        const reg = new RegExp(`acct:(.+?)@${instance?.domain}`);
+        const localAcct = res.subject.match(reg);
+        if(!localAcct) return null;
+        retrieveById(localAcct[1]);
+    }, [retrieveById, dispatch, state.requests]);
+
+    return useCallback((account: IPartialAccount): IPartialAccount | IAccount => {
+        if(!isPartial(account)) return account;
+        if(account.url) {
+            const match = Object.values(state.users).find((u) => u.url === account.url);
+            if(match) return match;
+            retrieveByUri(account.url);
+        } else if(account.id) {
+            if(state.users[account.id as string] != null) return state.users[account.id as string];
+            retrieveById(account.id);
+        }
+        return account;
     }, [state.users]);
 };
 
@@ -72,7 +116,7 @@ export function DirectoryProvider({
 }: {
     children: ComponentChildren
 }) {
-    const [state, dispatch] = useReducer(reducer, { users: {}});
+    const [state, dispatch] = useReducer(reducer, defaultState.state);
 
     const value = useMemo(() => ({
         state,

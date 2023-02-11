@@ -1,3 +1,10 @@
+export async function webfinger(ressource: string) {
+    const response = await fetch(new URL(`/.well-known/webfinger?resource=${encodeURIComponent(ressource)}`, import.meta.env.VITE_INSTANCE_URL));
+    if(response.status === 404) return null;
+    return response.json();
+}
+
+
 export async function serverInfo() {
     const [instanceResponse, nodeInfoResponse] = await Promise.all([
         fetch(new URL('/api/v1/instance', import.meta.env.VITE_INSTANCE_URL)),
@@ -5,9 +12,9 @@ export async function serverInfo() {
     ])
     const [instance, nodeInfo] = await Promise.all([instanceResponse.json(), nodeInfoResponse.json()]);
 
-    console.log(nodeInfo);
     return {
         ...instance,
-        staff: nodeInfo.metadata.staffAccounts.map((url: string) => ({ id: url.split('/').pop() }))
+        domain: new URL(instance.uri).host,
+        staff: nodeInfo.metadata.staffAccounts.map((url: string) => ({ url }))
     };
 }
