@@ -40,23 +40,18 @@ const useConfig = () => {
 };
 
 function ColorWrapper({ children }: { children: ComponentChildren}) {
-  const root: MutableRef<HTMLDivElement | null> = useRef(null);
   const { state } = useConfig();
 
   useEffect(() => {
     Object.keys(state.colors).forEach((colorName) => {
       const { h, s } = (state.colors as never)[colorName];
       for (let i = 100; i <= 900; i += 100) {
-        root.current?.style.setProperty(`--color-${colorName}-${i}`, `${h} ${s}% ${i / 10}%`);
+        document.body.style.setProperty(`--color-${colorName}-${i}`, `${h} ${s}% ${i / 10}%`);
       }
     });
   }, []);
 
-  return (
-    <div ref={root}>
-      { children }
-    </div>
-  );
+  return children;
 }
 
 function ConfigProvider({ children } : { children: ComponentChildren}) {

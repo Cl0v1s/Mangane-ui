@@ -9,10 +9,18 @@ interface IColors {
     brand: IColor,
 }
 
+interface ILink {
+    label: string, 
+    url: string,
+}
+
 interface IInstance {
     logo: string,
     description: string,
+    links: Array<ILink>,
 }
+
+
 
 /**
  * Defines a configuration file
