@@ -1,2 +1,51 @@
 @tailwind base;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('/AtkinsonHyperlegible-Italic.eot');
+    src: url('/AtkinsonHyperlegible-Italic.eot?#iefix') format('embedded-opentype'),
+        url('/AtkinsonHyperlegible-Italic.woff2') format('woff2'),
+        url('/AtkinsonHyperlegible-Italic.woff') format('woff'),
+        url('/AtkinsonHyperlegible-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('/AtkinsonHyperlegible-Regular.eot');
+    src: url('/AtkinsonHyperlegible-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/AtkinsonHyperlegible-Regular.woff2') format('woff2'),
+        url('/AtkinsonHyperlegible-Regular.woff') format('woff'),
+        url('/AtkinsonHyperlegible-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('/AtkinsonHyperlegible-Bold.eot');
+    src: url('/AtkinsonHyperlegible-Bold.eot?#iefix') format('embedded-opentype'),
+        url('/AtkinsonHyperlegible-Bold.woff2') format('woff2'),
+        url('/AtkinsonHyperlegible-Bold.woff') format('woff'),
+        url('/AtkinsonHyperlegible-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('/AtkinsonHyperlegible-BoldItalic.eot');
+    src: url('/AtkinsonHyperlegible-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('/AtkinsonHyperlegible-BoldItalic.woff2') format('woff2'),
+        url('/AtkinsonHyperlegible-BoldItalic.woff') format('woff'),
+        url('/AtkinsonHyperlegible-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+

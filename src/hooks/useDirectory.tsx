@@ -64,11 +64,6 @@ function reducer(state: IDirectory, action: IAction) {
     }
 }
 
-/**
- * Return a method allowing to get user data based on their ID. 
- * It's also possible to search for a user by their handle  
- * @returns 
- */
 export const useDirectory = () => {
     const {
         state,
@@ -76,8 +71,6 @@ export const useDirectory = () => {
     } = useContext(directoryContext);
 
     const { state: instance} = useInstance();
-
-    useEffect(() => console.log(state), [state]);
 
     const retrieveById = useCallback(async (id: string) => {
         if(state.requests.find((r) => id === r)) return;

@@ -23,15 +23,15 @@ function IndexView() {
                 <h1 className={"text-3xl font-bold text-accent-500"}>{ instance?.title }</h1>
             </div>
             <div dangerouslySetInnerHTML={{__html: description}} />
-            <div className={"pt-5 flex flex-col gap-1"}>
-                <h3 className={"text-lg"}>
+            <div className={"pt-5 flex flex-col gap-2"}>
+                <h3 className={"text-lg font-bold"}>
                     <FormattedMessage 
                         id="WelcomeActivity.moderators"
                         defaultMessage="Moderation team"
                     />
                 </h3>
                 <u><a href={`mailto:${instance?.email}`}>{ instance?.email }</a></u>
-                <div>
+                <div className="flex flex-col gap-3">
                     {
                         instance?.staff.map((pa: IPartialAccount) => <AccountSummary account={pa} />)
                     }
