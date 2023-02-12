@@ -1,4 +1,4 @@
-import { Loader } from './../ui/ui';
+import { Loader } from './../ui/Loader';
 import { IPartialAccount, IAccount, isPartial } from "../types/IAccount"
 import { useDirectory } from '../hooks/useDirectory';
 import { useMemo } from 'preact/hooks';
