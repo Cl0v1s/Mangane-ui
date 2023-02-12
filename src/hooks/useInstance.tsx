@@ -1,6 +1,6 @@
 import { createContext, ComponentChildren } from "preact";
 import { useMemo, useReducer, useContext, useEffect, useCallback } from "preact/hooks";
-import { serverInfo } from './../services/instance';
+import { customEmojis, serverInfo } from './../services/instance';
 import {
     IInstance
 } from "../types/IInstance";
@@ -64,7 +64,11 @@ export function InstanceProvider({
     const [state, dispatch] = useReducer(reducer, null);
 
     const retrieveServerInfo = useCallback(async () => {
-        const instance = await serverInfo();
+        const raw = await Promise.all([serverInfo(), customEmojis()]);
+        const instance: IInstance = {
+            ...raw[0],
+            emojis: raw[1],
+        }
         dispatch({ type: ACTIONS.RETRIEVED_INSTANCE, value: instance })
     }, []);
 

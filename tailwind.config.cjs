@@ -41,6 +41,9 @@ module.exports = {
         }
       },
     },
+    backgroundColor: {
+      ...colors,
+    }
   },
   plugins: [],
 }

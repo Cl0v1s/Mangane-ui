@@ -4,6 +4,11 @@ export async function webfinger(ressource: string) {
     return response.json();
 }
 
+export async function customEmojis() {
+    const response = await fetch(new URL("/api/v1/custom_emojis", import.meta.env.VITE_INSTANCE_URL));
+    return response.json();
+}
+
 
 export async function serverInfo() {
     const [instanceResponse, nodeInfoResponse] = await Promise.all([
