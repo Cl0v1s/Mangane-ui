@@ -30,8 +30,8 @@ function Button({
           'text-brand-500',
           'px-4',
           'py-2',
-          'bg-brand-900',
-          'hover:bg-brand-800',
+          'bg-brand-100',
+          'hover:bg-brand-200',
         ];
       }
 

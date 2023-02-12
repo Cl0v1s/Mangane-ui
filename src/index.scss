@@ -49,3 +49,6 @@
     font-display: swap;
 }
 
+#app {
+    --tw-gradient-stops: var(--tw-gradient-from) 20%, hsl(var(--color-brand-100) / 1) 40%, hsl(var(--color-brand-200) / 0.7) 50%, hsl(var(--color-brand-100) / 1) 60%, var(--tw-gradient-to) 80%;
+}

@@ -1,5 +1,4 @@
-// @ts-ignore
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import {IntlProvider} from 'react-intl'
 import { ConfigProvider } from './hooks/useConfig';
 import { InstanceProvider } from './hooks/useInstance';
@@ -18,13 +17,11 @@ export function App() {
       <ConfigProvider>
         <DirectoryProvider>
           <InstanceProvider>
-            <Router>
-              <Switch>
-                <Route index>
-                  <WelcomeActivity />
-                </Route>
-              </Switch>
-            </Router>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/*" element={<WelcomeActivity />} />
+              </Routes>
+            </BrowserRouter>
           </InstanceProvider>
         </DirectoryProvider>
       </ConfigProvider>

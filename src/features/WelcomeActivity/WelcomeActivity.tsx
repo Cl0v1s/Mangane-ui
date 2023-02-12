@@ -1,8 +1,17 @@
+// @ts-ignore
+import { Route, Routes } from 'react-router-dom';
+
 import { IndexView } from "./IndexView";
+import { LoginDialog } from './LoginDialog';
 
 function WelcomeActivity() {
   return (
-    <IndexView />
+    <>
+      <Routes>
+        <Route path="/login" element={<LoginDialog />} />
+      </Routes>
+      <IndexView />
+    </>
   );
 }
 

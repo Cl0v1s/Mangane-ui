@@ -46,7 +46,7 @@ function ColorWrapper({ children }: { children: ComponentChildren}) {
     Object.keys(state.colors).forEach((colorName) => {
       const { h, s } = (state.colors as never)[colorName];
       for (let i = 100; i <= 900; i += 100) {
-        document.body.style.setProperty(`--color-${colorName}-${i}`, `${h} ${s}% ${i / 10}%`);
+        document.body.style.setProperty(`--color-${colorName}-${i}`, `${h} ${s}% ${100 - i / 10}%`);
       }
     });
   }, []);
