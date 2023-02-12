@@ -6,6 +6,8 @@ import { Input} from './../../ui/Input';
 import { Button } from '../../ui/Button';
 import { TargetedEvent } from 'preact/compat';
 
+import { auth } from '../../services/accounts';
+
 const LoginDialog = () => {
     const navigate = useNavigate();
 
@@ -15,8 +17,8 @@ const LoginDialog = () => {
 
     const onSubmit = useCallback((e: TargetedEvent<HTMLFormElement, Event>) => {
       e.preventDefault();
-      const data = new FormData(e.currentTarget);
-      console.log(data.entries());
+      const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+      auth(data.username.toString(), data.password.toString());
     }, []);
 
     return (
