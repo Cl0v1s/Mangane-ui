@@ -7,9 +7,11 @@ import { Button } from '../../ui/Button';
 import { TargetedEvent } from 'preact/compat';
 
 import { auth } from '../../services/accounts';
+import { useUser } from '../../hooks/useUser';
 
 const LoginDialog = () => {
     const navigate = useNavigate();
+    const { actions } = useUser();
 
     const onClose = useCallback(() => {
       navigate('./../');
@@ -18,7 +20,7 @@ const LoginDialog = () => {
     const onSubmit = useCallback((e: TargetedEvent<HTMLFormElement, Event>) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-      auth(data.username.toString(), data.password.toString());
+      actions.login(data.username.toString(), data.password.toString());
     }, []);
 
     return (
