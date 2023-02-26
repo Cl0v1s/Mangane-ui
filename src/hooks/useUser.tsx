@@ -1,7 +1,10 @@
 import { createContext, ComponentChildren } from "preact";
-import { useContext, useReducer, useMemo, useCallback } from "preact/hooks";
+import { useContext, useReducer, useMemo, useCallback, useEffect } from "preact/hooks";
 import { IAccount } from "../types/IAccount";
-import { auth } from "../services/accounts";
+import { auth, verifyToken } from "../services/accounts";
+import { IMessage } from "../types/IMessage";
+import { timeline as retrieveTimeline } from "../services/message";
+import { get } from './../helpers/storage';
 
 interface IAction {
     type: ACTIONS,
@@ -9,11 +12,15 @@ interface IAction {
 }
 
 export enum ACTIONS {
-    RETRIEVED_USER
+    RETRIEVED_USER,
+    SET_TIMELINE,
 }
 
 interface IUser {
-    account: IAccount | undefined
+    account: IAccount | undefined,
+    timelines: {
+        [name: string]: Array<IMessage>
+    }
 }
 
 interface IContext {
@@ -23,7 +30,7 @@ interface IContext {
 }
 
 const defaultState: IContext = {
-    state: { account: undefined },
+    state: { account: undefined, timelines: {} },
     dispatch: () => null,
 };
 
@@ -41,6 +48,15 @@ function reducer(state: IUser, action: IAction) {
                 account: value as IAccount,
             }
         }
+        case ACTIONS.SET_TIMELINE: {
+            const tl = value as { name: string, messages: Array<IMessage> }
+            return { 
+                ...state,
+                timelines: {
+                    [tl.name]: tl.messages,
+                }
+            }
+        }
         default: {
             return state;
         }
@@ -52,11 +68,15 @@ export const useUser = () => {
 
     const login = useCallback(async (username: string, password: string) => {
         const user = await auth(username, password);
-        console.log(user);
         dispatch({ type: ACTIONS.RETRIEVED_USER, value: user});
     }, []);
 
-    const actions = useMemo(() => ({ login }), []);
+    const timeline = useCallback(async (timeline: string) => {
+        const tl = await retrieveTimeline(timeline);
+        dispatch({ type: ACTIONS.SET_TIMELINE, value: { name: timeline, messages: tl }});
+    }, []);
+
+    const actions = useMemo(() => ({ login, timeline }), []);
     return { state, dispatch, actions };
 }
 
@@ -66,6 +86,17 @@ export function UserProvider({
     children: ComponentChildren
 }) {
     const [state, dispatch] = useReducer(reducer, defaultState.state);
+
+    const retrieveUserIfLogged = useCallback(async () => {
+        const { accessToken } = get();
+        if(!accessToken) return;
+        const user = await verifyToken(accessToken);
+        dispatch({ type: ACTIONS.RETRIEVED_USER, value: user});
+    }, []);
+
+    useEffect(() => {
+        retrieveUserIfLogged();
+    }, [retrieveUserIfLogged]);
 
     const value = useMemo(() => ({
         state,

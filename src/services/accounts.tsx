@@ -64,7 +64,7 @@ async function revokeToken(clientId: string, clientSecret: string, token: string
     });
 }
 
-async function verifyToken(token: string): Promise<IAccount> {
+export async function verifyToken(token: string): Promise<IAccount> {
     const response = await fetch(new URL('/api/v1/accounts/verify_credentials', import.meta.env.VITE_INSTANCE_URL), {
         headers: {
             "Authorization": `Bearer ${token}`

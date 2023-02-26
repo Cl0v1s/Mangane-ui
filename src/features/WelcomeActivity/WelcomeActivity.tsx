@@ -15,4 +15,4 @@ function WelcomeActivity() {
   );
 }
 
-export default WelcomeActivity;
+export { WelcomeActivity };

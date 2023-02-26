@@ -1,6 +1,13 @@
 import { IAccount } from "./IAccount"
 import { ICustomEmoji } from "./ICustomEmoji"
 
+export const Timelines = {
+    discover: "discover",
+    local: "local",
+    bubble: "bubble",
+    home: "home",
+}
+
 interface IMedia {
     id: string,
     type: "audio" | "video" | "gifv" | "image" | "unknown",
@@ -45,6 +52,18 @@ interface ICard {
     blurhash?: string,
 }
 
+interface ITag {
+    name: string,
+    url: string,
+}
+
+interface IMention {
+    id: string,
+    username: string,
+    url: string,
+    acct: string,
+}
+
 interface IMessage {
     // base
     id: string,
@@ -61,10 +80,12 @@ interface IMessage {
     media_attachments: Array<IMedia>,
     poll?: IPoll,
     card?: ICard, 
+    tags: Array<ITag>,
+    emojis: Array<ICustomEmoji>,
+    mentions: Array<IMention>,
 
     // meta 
     reblog?: IMessage, // to reblog when emit a new message with the reblog property set to the reblogged message
-
 
     // stats 
     replies_count: number,
@@ -79,15 +100,9 @@ interface IMessage {
         website?: string,
     }
 
-
     // reply
     in_reply_to_id?: string,
     in_reply_to_account_id?: string,
 }
 
-const MessageExample = {
-    "media_attachments": [],
-    "mentions": [],
-    "tags": [],
-    "emojis": [],
-}
+export type { IMessage }; 
