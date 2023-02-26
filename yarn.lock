@@ -588,6 +588,19 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@tabler/icons-react@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-react/-/icons-react-2.5.0.tgz#db847043e632d94e501129ef5c6b1c0dcafbfa86"
+  integrity sha512-RP5gOEis5QPArMkAuOomMEvT4+nDWF2CBNv2SCGVYFC8mXEz5tYzjPoaBQDpyWO7vB6IeJvvk7feOaLBvD2zRA==
+  dependencies:
+    "@tabler/icons" "2.5.0"
+    prop-types "^15.7.2"
+
+"@tabler/icons@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-2.5.0.tgz#d212de4953c8fad778571c5da2a4d4bb5b23abe0"
+  integrity sha512-gQceaW6itR2Wna2Kqcrxz3gm2cNxwg/DCgT17W1N9la4Iri1r9g681uO2LryDskGXfs71Trhd3CtrED/T6dzUQ==
+
 "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -2449,7 +2462,7 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==

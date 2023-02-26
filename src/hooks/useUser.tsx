@@ -69,6 +69,7 @@ export const useUser = () => {
     const login = useCallback(async (username: string, password: string) => {
         const user = await auth(username, password);
         dispatch({ type: ACTIONS.RETRIEVED_USER, value: user});
+        return !!user;
     }, []);
 
     const timeline = useCallback(async (timeline: string) => {

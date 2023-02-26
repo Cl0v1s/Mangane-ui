@@ -3,7 +3,7 @@ import { useMemo } from 'preact/hooks';
 import { IReusableComponent } from '../types/IReusableComponent';
 
 interface IButton extends IReusableComponent {
-    variant?: 'primary' | 'secondary' | 'tertiary',
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost',
     type?: 'button' | 'submit',
     onClick?: () => undefined,
     children: ComponentChildren,
@@ -15,6 +15,12 @@ function Button({
 } : IButton) {
   const classes = useMemo((): Array<string> => {
     switch (variant) {
+      case 'ghost': {
+        return [
+          "text-gray-500",
+          "hover:text-brand-600"
+        ]
+      }
       case 'tertiary': {
         return [
           'rounded-full',

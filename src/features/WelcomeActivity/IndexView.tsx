@@ -5,16 +5,13 @@ import { useConfig } from "../../hooks/useConfig";
 import { useInstance } from "../../hooks/useInstance";
 import { Button } from "../../ui/Button";
 
+import { IconInstance } from '../../ui/IconInstance';
 import { AccountSummary } from "../../common/AccountSummary";
 import { IPartialAccount } from "../../types/IAccount";
 
 function IndexView() {
     const { state: instance } = useInstance();
     const { state: config } = useConfig();
-
-    const logo = useMemo(() => {
-        return atob(config.instance.logo);
-    }, []);
     
     const description = useMemo(() => config.instance.description.replace(/\{\{user_count\}\}/g, (instance?.stats.user_count || 0).toString()), [config.instance.description, instance?.stats.user_count])
 
@@ -42,7 +39,7 @@ function IndexView() {
             <div className="flex items-center gap-4 grow max-w-[800px] mx-auto">
                 <div className={"flex flex-col gap-4 grow"}>
                     <div className={"flex items-center gap-2"}>
-                        <div className={"w-[35px] h-[35px]"} dangerouslySetInnerHTML={{__html: logo }} />
+                        <IconInstance size={35} />
                         <h1 className={"text-5xl font-bold text-accent-500"}>{ instance?.title }</h1>
                     </div>
                     <div className="grow" dangerouslySetInnerHTML={{__html: description}} />

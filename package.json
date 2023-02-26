@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.9",
     "@rollup/plugin-alias": "^4.0.3",
+    "@tabler/icons-react": "^2.5.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "autoprefixer": "^10.4.13",

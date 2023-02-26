@@ -2,7 +2,7 @@ import { Loader } from './../ui/Loader';
 import { IPartialAccount, IAccount, isPartial } from "../types/IAccount"
 import { useDirectory } from '../hooks/useDirectory';
 import { useMemo } from 'preact/hooks';
-import { RichText } from './RichText';
+import { RichText } from '../ui/RichText';
 
 interface IAccountSummary {
     account: IPartialAccount,

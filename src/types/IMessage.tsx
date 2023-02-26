@@ -64,13 +64,15 @@ interface IMention {
     acct: string,
 }
 
+type MessageVisibility = "public" | "unlisted" | "private" | "direct" | "local"
+
 interface IMessage {
     // base
     id: string,
     created_at: Date,
     sensitive: boolean,
     spoiler_text?: string,
-    visibility: "public" | "unlisted" | "private" | "direct" | "local",
+    visibility: MessageVisibility,
     language?: string,
     uri: string,
     url: string,
@@ -105,4 +107,4 @@ interface IMessage {
     in_reply_to_account_id?: string,
 }
 
-export type { IMessage }; 
+export type { MessageVisibility, IMessage }; 
