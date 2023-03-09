@@ -15,7 +15,7 @@ const IconInstance = ({ size = 24, color = 'currentColor' }: IIcon) => {
     }, []);
 
     return (
-        <div className={`w-[${size}px] h-[${size}px]`} style={{color}} dangerouslySetInnerHTML={{__html: logo }} />
+        <div style={{color, width: `${size}px`, height: `${size}px`}} dangerouslySetInnerHTML={{__html: logo }} />
     );
 }
 

@@ -1,3 +1,5 @@
+import { ICustomEmoji  } from "./ICustomEmoji"
+
 interface IPartialAccount {
     id?: string,
     url?: string,
@@ -27,7 +29,8 @@ interface IAccount extends IPartialAccount {
         name: string,
         value: string,
         verified_at: string | null,
-    }]
+    }],
+    emojis: Array<ICustomEmoji>
 }
 
 export function isPartial(account: IAccount | IPartialAccount) {

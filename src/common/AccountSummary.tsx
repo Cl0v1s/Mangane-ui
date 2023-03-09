@@ -6,18 +6,26 @@ import { RichText } from '../ui/RichText';
 
 interface IAccountSummary {
     account: IPartialAccount,
+    variant?: "default" | "small",
 }
 
-const AccountSummary = ({ account }: IAccountSummary ) => {
+const AccountSummary = ({ account, variant = "default" }: IAccountSummary ) => {
     const directory = useDirectory();
     const actualAccount = useMemo(() => directory(account), [directory]);
     if(isPartial(actualAccount)) return <Loader />;
     return (
         <div className={"flex items-center gap-2"}>
-            <img src={(actualAccount as IAccount).avatar_static} className={"bg-gray-100 rounded-full object-cover w-[50px] h-[50px]"} />
-            <div>
+            <img 
+                src={(actualAccount as IAccount).avatar_static} 
+                className={`bg-gray-100 rounded-full object-cover`}
+                style={{
+                    width: variant === "small" ? '25px' : '50px',
+                    height: variant === "small" ? '25px' : '50px',
+                }}
+                />
+            <div className={`${variant === "small" ? 'flex items-center gap-1' : ''}`}>
                 <div className="font-bold">
-                    <RichText>{ (actualAccount as IAccount).display_name }</RichText>
+                    <RichText emojis={(actualAccount as IAccount).emojis}>{ (actualAccount as IAccount).display_name }</RichText>
                 </div>
                 <div className={"text-sm text-gray-500"}>
                     @{ (actualAccount as IAccount).fqn }

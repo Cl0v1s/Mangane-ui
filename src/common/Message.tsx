@@ -4,17 +4,19 @@ import { AccountSummary } from './AccountSummary';
 import { IMessage } from './../types/IMessage';
 import { IconVisibility  } from './../ui/IconVisibility';
 import { LocaleDate } from '../ui/LocaleDate';
+import { RichText } from '../ui/RichText';
 
 interface IMessageComponent {
     message: IMessage,
+    detail: boolean,
 }
 
-const Message = ({message}: IMessageComponent) => {
+const ActualMessage = ({message, detail = false}: IMessageComponent) => {
 
     const createdAt = new Date(message.created_at);
 
     return(
-        <div className="flex flex-col gap-2 bg-white rounded-lg p-4">
+        <>
             <div className="flex">
                 <div className="grow">
                     <AccountSummary account={message.account} />
@@ -23,7 +25,7 @@ const Message = ({message}: IMessageComponent) => {
                     <IconVisibility visibility={message.visibility} />
                 </div>
             </div>
-            <div dangerouslySetInnerHTML={{__html: message.content}}></div>
+            <RichText emojis={message.emojis}>{ message.content }</RichText>
             <div className="flex pt-2">
                 <div className="grow flex gap-3 text-gray-400 items-center">
                         <Button variant="ghost" className="flex gap-1">
@@ -32,13 +34,13 @@ const Message = ({message}: IMessageComponent) => {
                         </Button>
                         <Button variant="ghost" className={`flex gap-1 ${message.reblogged && 'text-brand-600'}`}>
                             <IconRepeat />
-                            { message.reblogs_count }
+                            { detail && message.reblogs_count }
                         </Button>
                         <Button variant="ghost" className={`flex gap-1 ${message.favourited && 'text-brand-600'}`}>
                             {
                                 message.favourited ? <IconHeartFilled /> : <IconHeart />
                             }
-                            { message.favourites_count }
+                            { detail && message.favourites_count }
                         </Button>
                         <Button variant="ghost" className={`flex gap-1 ${message.bookmarked && 'text-brand-600'}`}>
                             <IconBookmark />
@@ -49,9 +51,31 @@ const Message = ({message}: IMessageComponent) => {
                 </div>
             </div>
 
-        </div>
+        </>
 
     );
 };
+
+const Message = ({message, detail }: IMessageComponent) => {
+    return (
+        <div className="flex flex-col gap-2 bg-white rounded-lg p-4">
+            {
+                message.reblog ? (
+                    <>
+                        <div className="flex mb-2 gap-2">
+                            <span className="text-gray-400">
+                                <IconRepeat />
+                            </span>
+                            <AccountSummary account={message.account} variant="small" />
+                        </div>
+                        <ActualMessage message={message.reblog} detail={detail} />
+                    </>
+                ) : (
+                    <ActualMessage message={message} detail={detail} />
+                )
+            }
+        </div>
+    )
+}
 
 export { Message };
