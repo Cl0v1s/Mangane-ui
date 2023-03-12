@@ -3,7 +3,7 @@ import { useContext, useReducer, useMemo, useCallback, useEffect } from "preact/
 import { IAccount } from "../types/IAccount";
 import { auth, verifyToken } from "../services/accounts";
 import { IMessage } from "../types/IMessage";
-import { timeline as retrieveTimeline, timeline } from "../services/message";
+import { timeline as retrieveTimeline } from "../services/message";
 import { get } from './../helpers/storage';
 
 interface IAction {

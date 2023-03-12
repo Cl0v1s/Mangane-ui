@@ -1,5 +1,32 @@
-import { Timelines } from "../types/IMessage";
+import { IMessage, Timelines } from "../types/IMessage";
 import { get } from './../helpers/storage';
+
+function explore(current: IMessage, messages: Array<IMessage>) {
+    const children: Array<IMessage> = messages.filter((m) => m.in_reply_to_id === current.id).map((m) => explore(m, messages));
+    return {
+        ...current,
+        children,
+    }
+}
+
+export async function context(message: IMessage) {
+    const target = new URL(`/api/v1/statuses/${message.id}/context`, import.meta.env.VITE_INSTANCE_URL);
+    const response = await fetch(
+        target,
+        {
+            headers: {
+                'Authorization': `Bearer ${get().accessToken}`
+            }
+        }
+    );
+    const { ancestors, descendants }: { ancestors: Array<IMessage>, descendants: Array<IMessage>} = await response.json();
+    const messages = [...ancestors, ...descendants];
+    const parent = explore(messages.find((m) => !m.in_reply_to_id) as IMessage, messages);
+    return {
+        parent,
+        current: message,
+    }
+}
 
 export async function timeline(tl: string, limit = 20, max_id: string | undefined = undefined) {
     let url = "", params = { limit, max_id } as any;
