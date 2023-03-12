@@ -1,4 +1,5 @@
 import { IconMessageCircle2, IconRepeat, IconHeart, IconBookmark, IconHeartFilled } from '@tabler/icons-react';
+import intl from "react-intl";
 import { Button } from '../ui/Button';
 import { AccountSummary } from './AccountSummary';
 import { IMessage } from './../types/IMessage';
@@ -8,7 +9,7 @@ import { RichText } from '../ui/RichText';
 
 interface IMessageComponent {
     message: IMessage,
-    detail: boolean,
+    detail?: boolean,
 }
 
 const ActualMessage = ({message, detail = false}: IMessageComponent) => {

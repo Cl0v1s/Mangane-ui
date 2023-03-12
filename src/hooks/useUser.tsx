@@ -3,7 +3,7 @@ import { useContext, useReducer, useMemo, useCallback, useEffect } from "preact/
 import { IAccount } from "../types/IAccount";
 import { auth, verifyToken } from "../services/accounts";
 import { IMessage } from "../types/IMessage";
-import { timeline as retrieveTimeline } from "../services/message";
+import { timeline as retrieveTimeline, timeline } from "../services/message";
 import { get } from './../helpers/storage';
 
 interface IAction {
@@ -49,11 +49,11 @@ function reducer(state: IUser, action: IAction) {
             }
         }
         case ACTIONS.SET_TIMELINE: {
-            const tl = value as { name: string, messages: Array<IMessage> }
+            const tl = value as { name: string, messages: Array<IMessage>, concat: boolean }
             return { 
                 ...state,
                 timelines: {
-                    [tl.name]: tl.messages,
+                    [tl.name]: !tl.concat ? tl.messages : [...(state.timelines[tl.name] ||[]), ...tl.messages],
                 }
             }
         }
@@ -72,9 +72,9 @@ export const useUser = () => {
         return !!user;
     }, []);
 
-    const timeline = useCallback(async (timeline: string) => {
-        const tl = await retrieveTimeline(timeline);
-        dispatch({ type: ACTIONS.SET_TIMELINE, value: { name: timeline, messages: tl }});
+    const timeline = useCallback(async (timeline: string, limit = 20, max_id: string | undefined = undefined, concat: boolean = false) => {
+        const tl = await retrieveTimeline(timeline, limit, max_id);
+        dispatch({ type: ACTIONS.SET_TIMELINE, value: { name: timeline, messages: tl, concat }});
     }, []);
 
     const actions = useMemo(() => ({ login, timeline }), []);
