@@ -10,6 +10,7 @@ import { WelcomeActivity } from './features/WelcomeActivity/WelcomeActivity';
 import { TimelineActivity } from './features/TimelineActivity/TimelineActivity';
 
 import fr from './locales/fr.json';
+import { ConversationActivity } from './features/ConversationActivity/ConversationActivity';
 
 const AppRoutes = () => {
   const { state } = useUser();
@@ -17,7 +18,10 @@ const AppRoutes = () => {
     <Routes>
     { 
       state.account && (
-        <Route path="/*" element={<TimelineActivity />} />
+        <>
+          <Route path="/*" element={<TimelineActivity />} />
+          <Route path="/conversation/:id/*" element={<ConversationActivity />} />
+        </>
       )
     }
     {

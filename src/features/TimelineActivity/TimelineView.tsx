@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useLayoutEffect } from "preact/hooks";
+import { Link } from 'react-router-dom';
 import { useUser } from "../../hooks/useUser";
 
 import { Message } from "../../common/Message";
@@ -48,7 +49,7 @@ const TimelineView = ({ timeline } : ITimelineView) => {
     return (
         <div ref={root} className="p-3 overflow-y-auto overflow-x-hidden">
             {
-                messages?.map((m) => <div key={m.id} id={`message-${m.id}`} className="my-4"><Message message={m} /></div>)
+                messages?.map((m) => <div key={m.id} id={`message-${m.id}`} className="my-4"><Link to={`/conversation/${m.id}`}><Message message={m} /></Link></div>)
             }
         </div>
     )

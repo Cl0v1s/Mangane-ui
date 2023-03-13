@@ -1,5 +1,4 @@
-import { useState } from 'preact/hooks';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, } from 'react-router-dom';
 import { Timelines } from '../../types/IMessage';
 
 import { TimelineView } from './TimelineView';

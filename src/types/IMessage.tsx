@@ -66,9 +66,12 @@ interface IMention {
 
 type MessageVisibility = "public" | "unlisted" | "private" | "direct" | "local"
 
-interface IMessage {
-    // base
+interface IPartialMessage {
     id: string,
+}
+
+interface IMessage extends IPartialMessage {
+    // base
     created_at: Date,
     sensitive: boolean,
     spoiler_text?: string,
@@ -107,4 +110,8 @@ interface IMessage {
     in_reply_to_account_id?: string,
 }
 
-export type { MessageVisibility, IMessage }; 
+interface IMessageWithChildren extends IMessage {
+    children: Array<IMessage>,
+}
+
+export type { MessageVisibility, IMessage, IMessageWithChildren, IPartialMessage }; 
